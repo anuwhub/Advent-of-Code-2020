@@ -1,0 +1,12 @@
+function checkGradient(x, y){
+    let input = document.querySelectorAll('pre')[0].innerText.split('\n');
+    input.pop();
+    let hit = 0;
+    for(let i=0; i<(input.length/y); i++){
+        if(input[i*y][(x*i)%input[0].length] == '#'){
+            hit++;
+        }
+    }
+    return hit;
+}
+console.log(checkGradient(3,1));
