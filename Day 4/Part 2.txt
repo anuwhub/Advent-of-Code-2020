@@ -1,0 +1,89 @@
+let input = document.querySelectorAll('pre')[0].innerText;
+input = input.substring(0, input.length - 1);
+input = input.split("\n\n").map(x => x.split(/\n| /g));
+
+let fields = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid', 'cid'];
+let optionalFields = ['cid'];
+let validPass = 0;
+
+for (let i = 0; i < input.length; i++) {
+    let dataCorrect = true;
+    if (input[i].length < (fields.length - optionalFields.length)) {
+        dataCorrect = false;
+    } else {
+        let passDict = input[i].map(x => x.split(":"));
+        for (let j = 0; j < passDict.length; j++) {
+            if (passDict[j][0] == 'cid' && passDict.length<fields.length) {
+                dataCorrect = false;
+                break;
+            }
+            if (passDict[j][0] == 'byr') {
+                let val = +passDict[j][1];
+                if (val < 1920 || val > 2002 || isNaN(val)) {
+                    dataCorrect = false;
+                    break;
+                }
+            }
+            if (passDict[j][0] == 'iyr') {
+                let val = +passDict[j][1];
+                if (val < 2010 || val > 2020 || isNaN(val)) {
+                    dataCorrect = false;
+                    break;
+                }
+            }
+            if (passDict[j][0] == 'eyr') {
+                let val = +passDict[j][1];
+                if (val < 2020 || val > 2030 || isNaN(val)) {
+                    dataCorrect = false;
+                    break;
+                }
+            }
+            if (passDict[j][0] == 'hgt') {
+                let measurement = passDict[j][1].slice(-2);
+                if (measurement != 'cm' && measurement != 'in') {
+                    dataCorrect = false;
+                    break;
+                }
+                let val = +passDict[j][1].slice(0, -2);
+                if (measurement == 'cm') {
+                    if (val < 150 || val > 193) {
+                        dataCorrect = false;
+                        break;
+                    }
+                } else {
+                    if (val < 59 || val > 76) {
+                        dataCorrect = false;
+                        break;
+                    }
+                }
+            }
+            if (passDict[j][0] == 'hcl') {
+                if (passDict[j][1].slice(0, 1) != '#') {
+                    dataCorrect = false;
+                    break;
+                }
+                let val = passDict[j][1].slice(1);
+                if (val.match(/[a-f]|[0-9]/g).length != 6) {
+                    dataCorrect = false;
+                    break;
+                }
+            }
+            if (passDict[j][0] == 'ecl') {
+                if (!/amb|blu|brn|gry|grn|hzl|oth/.test(passDict[j][1])) {
+                    dataCorrect = false;
+                    break;
+                }
+            }
+            if (passDict[j][0] == 'pid') {
+                if (passDict[j][1].match(/[0-9]/g).length != 9) {
+                    dataCorrect = false;
+                    break;
+                }
+            }
+        }
+    }
+    if (dataCorrect) {
+        validPass++;
+    }
+}
+console.log(validPass);
