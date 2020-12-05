@@ -1,0 +1,32 @@
+function calcID(bPass){
+    let front = 0;
+    let gap = 128;
+    let j=0;
+    while(gap>1){
+        gap /= 2;
+        if(bPass[j] == 'B'){
+            front+=gap;
+        }
+        j++;
+    }
+    gap = 8;
+    let left = 0;
+    while(gap>1){
+        gap /= 2;
+        if(bPass[j] == 'R'){
+            left+=gap;
+        }
+        j++;
+    }
+    return front*8+left;
+}
+
+let input = document.querySelectorAll('pre')[0].innerText.split('\n');
+input.pop();
+input = input.map(x=>calcID(x));
+input.sort((a,b)=>a-b);
+for(let i=0; i<input.length-1; i++){
+    if(input[i+1]-input[i] > 1){
+        console.log(input[i]+1);
+    }
+}
