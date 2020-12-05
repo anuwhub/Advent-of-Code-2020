@@ -1,0 +1,33 @@
+function calcID(bPass){
+    let front = 0;
+    let gap = 128;
+    let j=0;
+    while(gap>1){
+        gap /= 2;
+        if(bPass[j] == 'B'){
+            front+=gap;
+        }
+        j++;
+    }
+    gap = 8;
+    let left = 0;
+    while(gap>1){
+        gap /= 2;
+        if(bPass[j] == 'R'){
+            left+=gap;
+        }
+        j++;
+    }
+    return front*8+left;
+}
+
+let input = document.querySelectorAll('pre')[0].innerText.split('\n');
+input.pop();
+let maxID = 0;
+for(let i=0; i<input.length; i++){
+    let id = calcID(input[i]);
+    if(id > maxID){
+        maxID = id;
+    }
+}
+console.log(maxID);
