@@ -1,0 +1,23 @@
+function intersection(setA, setB) {
+    let _intersection = new Set()
+    for (let elem of setB) {
+        if (setA.has(elem)) {
+            _intersection.add(elem)
+        }
+    }
+    return _intersection
+}
+
+
+let input = document.querySelectorAll('pre')[0].innerText.split('\n\n').map(x=>x.split('\n'));
+input[input.length-1].pop();
+
+let total = 0;
+for(let i=0; i<input.length; i++){
+    let set = new Set(input[i][0]);
+    for(let j=1; j<input[i].length; j++){
+        set = intersection(set, input[i][j]);
+    }
+    total += set.size;
+}
+console.log(total);
