@@ -1,0 +1,9 @@
+let input = document.querySelectorAll('pre')[0].innerText.split('\n\n');
+
+let total = 0;
+for(let i=0; i<input.length; i++){
+    let items = new Set(input[i]);
+    items.delete('\n');
+    total += items.size;
+}
+console.log(total);
