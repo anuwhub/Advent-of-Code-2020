@@ -1,0 +1,35 @@
+function findBag(i){
+    if(dict[i].includes('shinygold')){
+        return 1;
+    } else {
+        for(let j in dict[i]){
+            if(findBag(dict[i][j])){
+                return 1;
+            }
+        }
+        return 0;
+    }
+}
+
+
+let input = document.querySelectorAll('pre')[0].innerText.split('\n').map(x=>x.split(" "));
+input.pop();
+let dict = {};
+for(let i in input){
+    let k = input[i][0]+input[i][1];
+    let v = [];
+    if(input[i].length%4 != 0){
+        dict[k] = v;
+    } else {
+        for(let j=5; j<input[i].length; j+=4){
+            v.push(input[i][j]+input[i][j+1]);
+        }
+        dict[k] = v;
+    }
+}
+
+let total = 0;
+for(let i in dict){
+    total += findBag(i);
+}
+console.log(total);
