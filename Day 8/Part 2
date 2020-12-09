@@ -1,0 +1,31 @@
+let inp = document.querySelectorAll('pre')[0].innerText.split('\n').map(x=>x.split(" "));
+inp.pop();
+
+for(let j in input){
+    let input = inp.map(x=>x.slice());
+    if(input[j][0] == 'acc'){
+        continue;
+    }
+    if(input[j][0] == 'jmp'){
+        input[j][0] = 'nop';
+    } else {
+        input[j][0] = 'jmp';
+    }
+    let acc = 0;
+    let visited = new Set();
+    let i = 0;
+    while(!visited.has(i) && !(i>=input.length)){
+        visited.add(i);
+        if(input[i][0] == 'acc'){
+            acc += +input[i][1];
+        }
+        if(input[i][0] == 'jmp'){
+            i += (+input[i][1])-1;
+        }
+        i++;
+    }
+    if(i>=input.length){
+        console.log(acc);
+        break;
+    }
+}
