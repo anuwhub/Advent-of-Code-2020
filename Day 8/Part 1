@@ -1,0 +1,17 @@
+let input = document.querySelectorAll('pre')[0].innerText.split('\n').map(x=>x.split(" "));
+input.pop();
+
+let acc = 0;
+let visited = new Set();
+let i = 0;
+while(!visited.has(i)){
+    visited.add(i);
+    if(input[i][0] == 'acc'){
+        acc += +input[i][1];
+    }
+    if(input[i][0] == 'jmp'){
+        i += (+input[i][1])-1;
+    }
+    i++;
+}
+console.log(acc);
